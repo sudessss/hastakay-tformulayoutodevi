@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="hastane.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<body>
+    <div class="header">
+       
+        <h1>Sağlıklı Günler Dileriz</h1>
+    
+    </div>
+
+    <div class="navbar">
+        
+        <div class="navbar-links">
+            <a href="#">Hakkımızda</a>
+            <a href="#">Doktorlarımız</a>
+            <a href="#">Bölümlerimiz</a>
+            <a href="#">İletişim</a>
+        </div>
+        
+    </div>
+
+    <div class="container">
+        <div class="leftsidebar">
+        
+        <ul class="leftsidebar-menu">
+            <li>
+            <a href="#"><i class="fa-solid fa-house-chimney"></i> Ana Sayfa</a>
+            </li>
+            <li>
+            <a href="#"><i class="fa-regular fa-hospital"></i> Hastanelerimiz</a>
+            </li>
+            <li>
+            <a href="#"><i class="fa-solid fa-handshake-angle"></i> Tıbbi Danışma</a>
+            </li>
+            <li>
+            <a href="#"><i class="fa-solid fa-user-doctor"></i> Doktor Başvurusu</a>
+            </li>
+            <li>
+            <a href="#"><i class="fa-solid fa-user-nurse"></i> Hemşire Başvurusu</a>
+            </li>
+        </ul>
+        </div>
+
+        <div class ="rightsidebar">
+            <h1>Hasta Kayıt Formu</h1>
+            <h3>Kayıt için bütün alanları doldurunuz!</h3>
+            
+            <hr><br>
+
+            <form id="hastakayitformu">
+            
+            <p><label for="ad">Ad</label></p>
+            <input type="text" id="ad" placeholder="Ali"><br>
+
+            <p><label for="soyad">Soyad</label></p>
+            <input type="text" id="soyad" placeholder="Koç"><br>
+            
+            <p><label for="adres">Adres</label></p>
+            <textarea id="adres" row="4" cols="50" placeholder="İnönü Mah. Nizamiye Caddesi No:1-9, Şişli /İstanbul"></textarea>
+
+            <p><label for="telefon">Telefon Numarası</label></p>
+            <input type="tel" id="telefon" placeholder="+90 212 273 4444" pattern="^\+90\s?\d{3}\s?\d{3}\s?\d{4}$" required><br>
+
+            <p><label for="kimliknumarasi">T.C. Kimlik Numarası</label></p>
+            <input type="text" id="kimliknumarasi" placeholder="11111111111" maxlength="11" pattern="^\d{11}$" required><br>
+
+            <p><label for="birim">Tıbbi Birimimiz</label></p>
+            <select id="birim">
+                <option value="acilservis">Acil Servis</option>
+                <option value="agizvedissagligi">Ağız ve Diş Sağlığı</option>
+                <option value="beslenmevediyet">Beslenme ve Diyet</option>
+                <option value="beyinvesinircerrahisi">Beyin ve Sinir Cerrahisi</option>
+                <option value="genelcerrahi">Genel Cerrahi</option>
+                <option value="gozhastaliklari">Göz Hastalıkları</option>
+                <option value="kadinhastaliklari">Kadın Hastalıkları ve Doğum</option>
+                <option value="ichastaliklari">İç Hastalıkları</option>
+            </select>
+
+            <p><label for="doktorlistesi">Doktor Listemiz</label></p>
+            <select id="doktorlistesi">
+                <option value="arifulubil">Prof. Dr. Arif Ulubil</option>
+                <option value="atakanyesil">Prof. Dr. Atakan Yeşil</option>
+                <option value="ayseoner">Prof. Dr. Ayşe Öner</option>
+                <option value="canobek">Prof. Dr. Can Öbek</option>
+                <option value="cihanaksoy">Prof. Dr. Cihan Aksoy</option>
+                <option value="düzgünyildirim">Prof. Dr. Düzgün Yıldırım</option>
+                <option value="farukabike">Prof. Dr. Faruk Abike</option>
+                <option value="halukesgin">Prof. Dr. Haluk Esgin</option>
+            </select>
+
+            <p><label for="date">Doğum Tarihi</label></p>
+            <input type="date" id="date" required><br>
+
+            <p><label for="email">E-Posta</label></p>
+            <input type="email" id="email" placeholder="ali@ornek.com">
+
+            
+            <p id="sonuc" style="color: red;"></p>
+
+                <button type="button" onclick="kaydet()">Kayıt Ol</button>
+            
+            </form>
+        
+        </div>
+
+    </div>
+   
+
+    <script>
+        function kaydet() {
+            let sonuc = document.getElementById("sonuc");
+            sonuc.style.color = "red"
+
+            let ad = document.getElementById("ad").value.trim();
+            let soyad = document.getElementById("soyad").value.trim();
+            let adres = document.getElementById("adres").value.trim();
+            let telefon = document.getElementById("telefon").value.trim();
+            let tcKimlik = document.getElementById("kimliknumarasi").value.trim();
+            let dogumTarihi = document.getElementById("date").value;
+            let email = document.getElementById("email").value.trim();
+            let birim = document.getElementById("birim").value;
+            let doktor = document.getElementById("doktorlistesi").value;
+
+            //Ad Soyad Kontrolü
+            
+            if (ad.length < 2) {
+                sonuc.innerHTML = "Ad en az 2 karakter olmalıdır!";
+                return;
+            }
+            
+            if (soyad.length < 2) {
+                sonuc.innerHTML = "Soyad en az 2 karakter olmalıdır!";
+                return;
+            }
+            
+            // Telefon Kontrolü (Türkiye Formatı)
+            
+            let telefonRegex = /^\+90\s?\d{3}\s?\d{3}\s?\d{4}$/;
+            if (!telefonRegex.test(telefon)) {
+                sonuc.innerHTML = "Telefon numarası '+90 XXX XXX XXXX' formatında olmalıdır!";
+                return;
+            }
+
+            // T.C. Kimlik Numarası Kontrolü
+            
+            if (!/^\d{11}$/.test(tcKimlik) || tcKimlik[0] === "0") {
+                sonuc.innerHTML = "T.C. Kimlik Numarası 11 haneli olmalı ve '0' ile başlamamalıdır!";
+                return;
+            }
+
+            // Doğum Tarihi Kontrolü (18 yaşından büyük olmalı)
+            
+            let today = new Date();
+            let birthDate = new Date(dogumTarihi);
+            let age = today.getFullYear() - birthDate.getFullYear();
+            let monthDiff = today.getMonth() - birthDate.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            
+            if (age < 18) {
+                sonuc.innerHTML = "Kayıt olabilmek için en az 18 yaşında olmalısınız!";
+                return;
+            }
+
+            // E-posta Kontrolü
+            
+            if (email.length < 5 || !email.includes("@")) {
+                sonuc.innerHTML = "Geçerli bir e-posta adresi giriniz!";
+                return;
+            }
+
+             // Kullanıcı bilgilerini kaydetme
+             
+             let user = {
+                ad: ad,
+                soyad: soyad,
+                adres: adres,
+                telefon: telefon,
+                tcKimlik: tcKimlik,
+                dogumTarihi: dogumTarihi,
+                email: email,
+                birim: birim,
+                doktor: doktor
+            };
+
+            localStorage.setItem("hastakayit", JSON.stringify(user));
+
+            // Başarı mesajı
+            
+            sonuc.style.color = "green";
+            sonuc.innerHTML = "Kayıt başarıyla tamamlandı!";
+        
+        }
+    </script>    
+
+    <div class="footer">
+    <p>&copy; 2025 Sağlıklı Günler Dileriz | Tüm hakları saklıdır.</p>
+    <div class="footer-links">
+        <a href="#">Hakkımızda</a>
+        <a href="#">İletişim</a>
+        <a href="#">Gizlilik Politikası</a>
+    </div>
+    </div>
+
+    
+
+    
+</body>
+</html>
